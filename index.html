@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webamp with Faded GIF Background</title>
+  <style>
+    body {
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://files.catbox.moe/ghlrpe.gif') center center / cover no-repeat fixed;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    #webamp {}
+  
+#bouncing-icon {
+  position: absolute;
+  width: 180px;
+  pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+  <div id="webamp"></div>
+  <img id="bouncing-icon" src="https://files.catbox.moe/xnxpc6.png" alt="Bouncing Icon">
+
+
+  <script src="https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js"></script>
+  <script src="https://unpkg.com/butterchurn@2.6.7/lib/butterchurn.min.js"></script>
+  <script src="https://unpkg.com/butterchurn-presets@2.6.7/lib/butterchurnPresets.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const skins = [
+      { url: "https://files.catbox.moe/ig157y.wsz", name: "Sony CDX-MP3" },
+      { url: "https://files.catbox.moe/fhfcwy.wsz", name: "Phusion 9" },
+      { url: "https://files.catbox.moe/qq3pb4.wsz", name: "XMMS Turquoise" },
+      { url: "https://files.catbox.moe/ufsxzs.wsz", name: "Extol" },
+      { url: "https://files.catbox.moe/93bc3e.wsz", name: "Syrogenesis V1" },
+      { url: "https://files.catbox.moe/c1q3sm.wsz", name: "Bento Classified" },
+      { url: "https://files.catbox.moe/b2i4vi.wsz", name: "Axon Modern" },
+      { url: "https://files.catbox.moe/eknhib.wsz", name: "Nightfly" },
+      { url: "https://files.catbox.moe/7vnuu2.wsz", name: "ScorpSkin" },
+      { url: "https://files.catbox.moe/ti8t2n.wsz", name: "Necromech" },
+      { url: "https://files.catbox.moe/mmnpaf.wsz", name: "Blue Fade" },
+      { url: "https://files.catbox.moe/bs7o8f.wsz", name: "music_4ever" },
+      { url: "https://files.catbox.moe/pk1ywl.wsz", name: "hxte_you." },
+      { url: "https://files.catbox.moe/v3ctno.wsz", name: "forgive me. (Rei Ayanami)" },
+      { url: "https://files.catbox.moe/002yzl.wsz", name: "Windows 98" },
+      { url: "https://files.catbox.moe/snucg6.wsz", name: "Gameboy" },
+      { url: "https://files.catbox.moe/mctyf1.wsz", name: "Zelda" },
+      { url: "https://files.catbox.moe/dtx7qb.wsz", name: "Castlevania IV" },
+      { url: "https://files.catbox.moe/z5j46i.wsz", name: "Fallout Pip-Boy" },
+      { url: "https://files.catbox.moe/o7nv4j.wsz", name: "Unreal" },
+      { url: "https://files.catbox.moe/e3684o.wsz", name: "Deus Ex GOTY" },
+      { url: "https://files.catbox.moe/9x41xz.wsz", name: "I'M GONNA MORB MYSELF!!!@!@!! dead meme xd" },
+      { url: "https://files.catbox.moe/qho2zj.wsz", name: "omg imposter is sus?????? (kill me)" },
+      { url: "https://files.catbox.moe/ri9ns8.wsz", name: "Yuzuki Kokubunji (Chobits)" },
+      { url: "https://files.catbox.moe/9zphfd.wsz", name: "Cinammoroll and Friends" },
+    ];
+
+      window.webamp = new Webamp({
+      availableSkins: skins,
+      initialSkin: skins[0],
+        initialTracks: [
+          {
+            metaData: { artist: "DJ Mike Llama", title: "Llama Whippin' Intro" },
+            url: "https://cdn.jsdelivr.net/gh/captbaritone/webamp@43434d82/mp3/llama-2.91.mp3",
+            duration: 5.322286
+          },
+          {
+            metaData: { artist: "Korn", title: "Got The Life" },
+            url: "https://files.catbox.moe/vpwhwu.mp3"
+          },
+          {
+            metaData: { artist: "Korn", title: "Freak On a Leash" },
+            url: "https://files.catbox.moe/3ro8wt.mp3"
+          },
+          {
+            metaData: { artist: "Cypress Hill", title: "Insane in the Brain" },
+            url: "https://files.catbox.moe/t5gt97.mp3"
+          }
+        ],
+        __butterchurnOptions: {
+          importButterchurn: () => Promise.resolve(window.butterchurn),
+          getPresets: () => {
+            const presets = window.butterchurnPresets.getPresets();
+            return Object.keys(presets).map((name) => ({
+              name,
+              butterchurnPresetObject: presets[name]
+            }));
+          },
+          butterchurnOpen: true
+        },
+        __initialWindowLayout: {
+          main: { position: { x: 0, y: 0 } },
+          equalizer: { position: { x: 0, y: 116 } },
+          playlist: { position: { x: 0, y: 232 } },
+          milkdrop: { position: { x: 275, y: 0 }, size: [600, 400] }
+        }
+      });
+
+      if (Webamp.browserIsSupported()) {
+        window.webamp.renderWhenReady(document.getElementById('webamp'))
+          .then(() => {
+            console.log("Webamp rendered successfully");
+            window.webamp.play();
+          })
+          .catch(err => console.error("Webamp failed to render:", err));
+      } else {
+        document.getElementById('webamp').innerText = "Sorry, Webamp is not supported in this browser.";
+      }
+    });
+
+    function addTrack(url, artist, title) {
+      if (window.webamp) {
+        window.webamp.appendTracks([{
+          url: url,
+          metaData: { artist: artist, title: title }
+        }]);
+      }
+    }
+  
+const icon = document.getElementById("bouncing-icon");
+
+let posX = 100;
+let posY = 100;
+let velX = 1;
+let velY = 1;
+
+function bounceIcon() {
+  const iconRect = icon.getBoundingClientRect();
+  const winW = window.innerWidth;
+  const winH = window.innerHeight;
+
+  if (posX + iconRect.width >= winW || posX <= 0) {
+    velX = -velX;
+  }
+  if (posY + iconRect.height >= winH || posY <= 0) {
+    velY = -velY;
+  }
+
+  posX += velX;
+  posY += velY;
+
+  icon.style.left = posX + "px";
+  icon.style.top = posY + "px";
+
+  requestAnimationFrame(bounceIcon);
+}
+
+bounceIcon();
+
+</script>
+</body>
+</html>
